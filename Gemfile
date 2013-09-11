@@ -32,9 +32,18 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+#testing with rspec gems
+gem 'rspec-rails' 
+gem 'factory_girl_rails'  
+gem 'faker' 
+gem 'capybara' 
+gem 'guard-rspec' 
+gem 'launchy' 
 
+# Use ActiveModel has_secure_password
+gem 'bcrypt-ruby', '~> 3.0.0'
+
+gem 'rb-readline'
 # Use unicorn as the app server
 # gem 'unicorn'
 
