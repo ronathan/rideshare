@@ -2,43 +2,50 @@ require 'spec_helper'
 
 describe User do
 
-  it { should respond_to(:username) }
-  it { should respond_to(:email) }
-  it { should respond_to(:password) }
-  it { should respond_to(:password_confirmation) }
-  it { should respond_to(:password_digest) }
-
-  it "has a valid factory" do
-  	FactoryGirl.create(:user).should be_valid
+  context "model only should respond to" do
+    it { should respond_to(:username) }
+    it { should respond_to(:email) }
+    it { should respond_to(:password) }
+    it { should respond_to(:password_confirmation) }
+    it { should respond_to(:password_digest) }
+    it { should respond_to(:created_at) }
+    it { should respond_to(:updated_at) }
   end
 
-  it "is invalid without a username" do
-  	FactoryGirl.build(:user, username: nil).should_not be_valid
+  context "FactoryGirl works" do
+    it "has a valid factory" do
+      FactoryGirl.create(:user).should be_valid
+    end
   end
 
-  it "is invalid when an existing username exists" do
-  	user1 = FactoryGirl.create(:user)
-  	FactoryGirl.build(:user, username: user1.username).should_not be_valid
+  context "model associations" do
+    it { should have_many(:posts) }
   end
 
-  it "is invalid without an email" do
-  	FactoryGirl.build(:user, email: nil).should_not be_valid
-  end
+  context "model should have valid data" do
+    before do
+      FactoryGirl.create(:user)
+    end
 
-  it "is invalid when a proper email is not entered" do
-  	FactoryGirl.build(:user, email: "notavalidemail").should_not be_valid
-  end
+    it { should validate_presence_of(:username) }
+    it { should validate_uniqueness_of(:username) }
+    it { should validate_presence_of(:email) }
+    it { should validate_uniqueness_of(:email) }
 
-  it "is invalid without matching passwords" do
-  	FactoryGirl.build(:user, password_confirmation: "boomboom").should_not be_valid
-  end
+    it { should_not allow_value("notavalidemail").for(:email) }
+    it { should allow_value("ronaldvictorino@gmail.com").for(:email) }
+    
+    it "is invalid without matching passwords" do
+    	FactoryGirl.build(:user, password_confirmation: "boomboom").should_not be_valid
+    end
 
-  it "is invalid when length is less than 6" do
-  	FactoryGirl.build(:user, password: "hello", password_confirmation: "hello").should_not be_valid
-  end
+    it "is invalid when length is less than 6" do
+    	FactoryGirl.build(:user, password: "hello", password_confirmation: "hello").should_not be_valid
+    end
 
-  it "is invalid when length is greater than 20" do
-  	FactoryGirl.build(:user, password: "hellohellohellohelloh", password_confirmation: "hellohellohellohelloh").should_not be_valid
+    it "is invalid when length is greater than 20" do
+    	FactoryGirl.build(:user, password: "hellohellohellohelloh", password_confirmation: "hellohellohellohelloh").should_not be_valid
+    end
   end
 
 end
