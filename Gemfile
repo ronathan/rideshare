@@ -39,6 +39,7 @@ gem 'faker'
 gem 'capybara' 
 gem 'guard-rspec' 
 gem 'launchy' 
+gem 'shoulda-matchers'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
