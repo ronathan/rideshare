@@ -1,4 +1,6 @@
 Rideshare::Application.routes.draw do
+  resources :cities
+
   resources :posts
 
   resources :users
